@@ -10,7 +10,7 @@ package com.tanyanping.async.ThreadFuture;
 public class HelloWorld implements FutureTask<String> {
 
     @Override
-    public String call()  {
+    public String call() {
         try {
             Thread.sleep(5000L);
         } catch (InterruptedException e) {
@@ -23,8 +23,10 @@ public class HelloWorld implements FutureTask<String> {
     public static void main(String args[]) throws Exception {
         FutureService<String> futureService = new FutureService<>();
         HelloWorld helloWorld = new HelloWorld();
-        Future<String> future = futureService.submit(helloWorld,(message)->{
-                 System.out.println(message);
+        Future<String> future = futureService.submit(helloWorld, (message) -> {
+            System.out.println("第一阶段执行的程序----->:" + message);
+        }, (message) -> {
+            System.out.println("第二阶段执行的程序----->:" + message);
         });
         System.out.println("==========================================================");
         //System.out.println(future.get());

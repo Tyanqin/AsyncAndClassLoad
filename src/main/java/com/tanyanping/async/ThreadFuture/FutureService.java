@@ -11,12 +11,12 @@ import java.util.function.Consumer;
  **********************************************************************************************/
 public class FutureService<T> {
 
-    public Future<T> submit(final FutureTask<T> futureTask, final Consumer<T> consumer) throws Exception {
+    public Future<T> submit(final FutureTask<T> futureTask, final Consumer<T> consumer1,final Consumer<T> consumer2) throws Exception {
         AsyncFuture asyncFutureTask = new AsyncFuture();
         new Thread(() -> {
             T result = futureTask.call();
             asyncFutureTask.done(result);
-            consumer.accept(result);
+            consumer1.andThen(consumer2).accept(result);
         }, "A").start();
         return asyncFutureTask;
     }
